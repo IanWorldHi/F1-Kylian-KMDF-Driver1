@@ -1,0 +1,9 @@
+<Solution>
+  <Configurations>
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="F1 Kylian KMDF Driver1 Hello World.vcxproj">
+    <Deploy />
+  </Project>
+</Solution>

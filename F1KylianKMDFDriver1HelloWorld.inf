@@ -1,0 +1,62 @@
+;
+; F1KylianKMDFDriver1HelloWorld.inf
+;
+
+[Version]
+Signature   = "$WINDOWS NT$"
+Class       = System ; TODO: specify appropriate Class
+ClassGuid   = {4d36e97d-e325-11ce-bfc1-08002be10318} ; TODO: specify appropriate ClassGuid
+Provider    = %ManufacturerName%
+CatalogFile = F1KylianKMDFDriver1HelloWorld.cat
+DriverVer   = ; TODO: set DriverVer in stampinf property pages
+PnpLockdown = 1
+
+[DestinationDirs]
+DefaultDestDir = 13
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+F1KylianKMDFDriver1HelloWorld.sys = 1,,
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName% = Standard,NT$ARCH$.10.0...16299 ; %13% support introduced in build 16299
+
+[Standard.NT$ARCH$.10.0...16299]
+%F1KylianKMDFDriver1HelloWorld.DeviceDesc% = F1KylianKMDFDriver1HelloWorld_Device, Root\F1KylianKMDFDriver1HelloWorld ; TODO: edit hw-id
+
+[F1KylianKMDFDriver1HelloWorld_Device.NT]
+CopyFiles = File_Copy
+
+[File_Copy]
+F1KylianKMDFDriver1HelloWorld.sys
+
+;-------------- Service installation
+[F1KylianKMDFDriver1HelloWorld_Device.NT.Services]
+AddService = F1KylianKMDFDriver1HelloWorld,%SPSVCINST_ASSOCSERVICE%, F1KylianKMDFDriver1HelloWorld_Service_Inst
+
+; -------------- F1KylianKMDFDriver1HelloWorld driver install sections
+[F1KylianKMDFDriver1HelloWorld_Service_Inst]
+DisplayName    = %F1KylianKMDFDriver1HelloWorld.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %13%\F1KylianKMDFDriver1HelloWorld.sys
+
+[F1KylianKMDFDriver1HelloWorld_Device.NT.Wdf]
+KmdfService = F1KylianKMDFDriver1HelloWorld, F1KylianKMDFDriver1HelloWorld_wdfsect
+
+[F1KylianKMDFDriver1HelloWorld_wdfsect]
+KmdfLibraryVersion = $KMDFVERSION$
+
+[Strings]
+SPSVCINST_ASSOCSERVICE = 0x00000002
+ManufacturerName = "<Your manufacturer name>" ;TODO: Replace with your manufacturer name
+DiskName = "F1KylianKMDFDriver1HelloWorld Installation Disk"
+F1KylianKMDFDriver1HelloWorld.DeviceDesc = "F1KylianKMDFDriver1HelloWorld Device"
+F1KylianKMDFDriver1HelloWorld.SVCDESC = "F1KylianKMDFDriver1HelloWorld Service"
